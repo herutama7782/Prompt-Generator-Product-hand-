@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prompt Generator Product (hand)</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      padding: 20px;
+      max-width: 600px;
+      margin: auto;
+    }
+    h1 {
+      text-align: center;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 15px;
+    }
+    input, select, textarea, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      box-sizing: border-box;
+    }
+    #output {
+      margin-top: 20px;
+      background: #fff;
+      padding: 15px;
+      border-radius: 5px;
+      white-space: pre-wrap;
+      border: 1px solid #ccc;
+    }
+    #header-image {
+      display: block;
+      max-width: 100%;
+      margin: 0 auto 20px;
+      border-radius: 10px;
+    }
+    #copyBtn {
+      margin-top: 10px;
+      padding: 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #copyBtn:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <img id="header-image" src="https://i.imgur.com/ZeQOw0L.jpeg" alt="Header Image">
+  <h1>Prompt Generator Product (hand)</h1>
+  <label for="product">Tuliskan Jenis Produk:</label>
+  <input type="text" id="product" placeholder="Misalnya: Skincare, Makeup, Parfum, Kosmetik, Vitamin, etc">
+
+  <label for="background">Latar Belakang:</label>
+  <input type="text" id="background" placeholder="Misalnya: Rak Minimarket, Gedung Bertingkat, kebun apel, bunga, buah-buahan, etc">
+
+  <label for="theme">Suasana Tambahan:</label>
+  <input type="text" id="theme" placeholder="Misalnya: siang hari, estetika alami, outdoor cerah, bokeh, etc">
+
+  <label for="hand">Gaya Tangan:</label>
+  <select id="hand">
+    <option value="tangan kiri dengan kuku bersih natural">Tangan kiri dengan kuku bersih natural</option>
+    <option value="tangan kanan dengan kuku bersih natural">Tangan kanan dengan kuku bersih natural</option>
+    <option value="tangan dengan kuku french manicure">Tangan dengan kuku french manicure</option>
+  </select>
+
+  <label for="resolution">Resolusi (Rasio):</label>
+  <select id="resolution">
+    <option value="9:16">9:16</option>
+    <option value="1:1">1:1</option>
+    <option value="16:9">16:9</option>
+  </select>
+
+  <button onclick="generatePrompt()">Hasilkan Prompt</button>
+
+  <div id="output"></div>
+  <button id="copyBtn">COPY</button>
+
+  <script>
+    function generatePrompt() {
+      const product = document.getElementById('product').value;
+      const background = document.getElementById('background').value;
+      const theme = document.getElementById('theme').value;
+      const hand = document.getElementById('hand').value;
+      const resolution = document.getElementById('resolution').value;
+
+      const prompt = `A high-quality photograph of a hand holding the product \"${product}\" in an outdoor setting. The hand is ${hand}. The background shows ${background} with ${theme}. The image is composed in ${resolution} aspect ratio. Make the setting aesthetically pleasing and unique, yet relevant to the product.`;
+
+      document.getElementById('output').textContent = prompt;
+    }
+
+    document.getElementById('copyBtn').addEventListener('click', function () {
+      const outputElement = document.getElementById('output');
+      const range = document.createRange();
+      range.selectNodeContents(outputElement);
+      const selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(range);
+      try {
+        document.execCommand('copy');
+        alert('Prompt berhasil disalin!');
+      } catch (err) {
+        alert('Gagal menyalin prompt.');
+      }
+      selection.removeAllRanges();
+    });
+  </script>
+</body>
+</html>
