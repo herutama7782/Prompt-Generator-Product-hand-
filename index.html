@@ -95,9 +95,9 @@
 
   <label for="hand">Gaya Tangan:</label>
   <select id="hand">
-    <option value="tangan kiri dengan kuku bersih natural">Tangan kiri dengan kuku bersih natural</option>
-    <option value="tangan kanan dengan kuku bersih natural">Tangan kanan dengan kuku bersih natural</option>
-    <option value="tangan dengan kuku french manicure">Tangan dengan kuku french manicure</option>
+    <option value="left hand with natural clean nails">Tangan kiri dengan kuku bersih natural</option>
+    <option value="right hand with natural clean nails">Tangan kanan dengan kuku bersih natural</option>
+    <option value="hand with manicure nails">Tangan dengan kuku manicure</option>
   </select>
 
   <label for="resolution">Resolusi (Rasio):</label>
@@ -122,7 +122,7 @@
       const hand = document.getElementById('hand').value;
       const resolution = document.getElementById('resolution').value;
 
-      const prompt = `A photograph of a hand holding the product \"${product}\" in an outdoor setting. The hand is ${hand}. The background shows ${background} with ${theme}. The image is composed in ${resolution} aspect ratio. Make the setting aesthetically pleasing and unique, yet relevant to the product.`;
+      const prompt = `A high-quality photograph of a hand holding the product \"${product}\" in an outdoor setting. The hand is ${hand}. The background shows ${background} with ${theme}. The image is composed in ${resolution} aspect ratio. Make the setting aesthetically pleasing and unique, yet relevant to the product.`;
 
       document.getElementById('output').textContent = prompt;
     }
