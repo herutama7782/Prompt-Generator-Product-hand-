@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Prompt Generator Product (hand)</title>
+  <title>Prompt Generator Produk (Hand)</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -52,19 +52,46 @@
     #copyBtn:hover {
       background-color: #45a049;
     }
+    #toast {
+      visibility: hidden;
+      min-width: 200px;
+      margin-left: -100px;
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      border-radius: 5px;
+      padding: 10px;
+      position: fixed;
+      z-index: 1;
+      left: 50%;
+      bottom: 30px;
+      font-size: 14px;
+    }
+    #toast.show {
+      visibility: visible;
+      animation: fadein 0.5s, fadeout 0.5s 2s;
+    }
+    @keyframes fadein {
+      from {bottom: 0; opacity: 0;}
+      to {bottom: 30px; opacity: 1;}
+    }
+    @keyframes fadeout {
+      from {bottom: 30px; opacity: 1;}
+      to {bottom: 0; opacity: 0;}
+    }
   </style>
 </head>
 <body>
   <img id="header-image" src="https://i.imgur.com/ZeQOw0L.jpeg" alt="Header Image">
-  <h1>Prompt Generator Product (hand)</h1>
+  <h1>Prompt Generator Produk (Hand)</h1>
   <label for="product">Tuliskan Jenis Produk:</label>
-  <input type="text" id="product" placeholder="Misalnya: Skincare, Makeup, Parfum, Kosmetik, Vitamin, etc">
+  <input type="text" id="product" placeholder="Skincare, Makeup, Parfum, Vitamin, etc">
 
   <label for="background">Latar Belakang:</label>
-  <input type="text" id="background" placeholder="Misalnya: Rak Minimarket, Gedung Bertingkat, kebun apel, bunga, buah-buahan, etc">
+  <input type="text" id="background" placeholder="Minimarket, Gedung, Sawah, kebun apel, bunga, buah, etc">
 
   <label for="theme">Suasana Tambahan:</label>
-  <input type="text" id="theme" placeholder="Misalnya: siang hari, estetika alami, outdoor cerah, bokeh, etc">
+  <input type="text" id="theme" placeholder="siang hari, estetika alami, outdoor, bokeh, etc">
 
   <label for="hand">Gaya Tangan:</label>
   <select id="hand">
@@ -85,6 +112,8 @@
   <div id="output"></div>
   <button id="copyBtn">COPY</button>
 
+  <div id="toast">Prompt berhasil disalin!</div>
+
   <script>
     function generatePrompt() {
       const product = document.getElementById('product').value;
@@ -93,26 +122,28 @@
       const hand = document.getElementById('hand').value;
       const resolution = document.getElementById('resolution').value;
 
-      const prompt = `A high-quality photograph of a hand holding the product \"${product}\" in an outdoor setting. The hand is ${hand}. The background shows ${background} with ${theme}. The image is composed in ${resolution} aspect ratio. Make the setting aesthetically pleasing and unique, yet relevant to the product.`;
+      const prompt = `A photograph of a hand holding the product \"${product}\" in an outdoor setting. The hand is ${hand}. The background shows ${background} with ${theme}. The image is composed in ${resolution} aspect ratio. Make the setting aesthetically pleasing and unique, yet relevant to the product.`;
 
       document.getElementById('output').textContent = prompt;
     }
 
-    document.getElementById('copyBtn').addEventListener('click', function () {
+    document.getElementById('copyBtn').addEventListener('click', async function () {
       const outputElement = document.getElementById('output');
-      const range = document.createRange();
-      range.selectNodeContents(outputElement);
-      const selection = window.getSelection();
-      selection.removeAllRanges();
-      selection.addRange(range);
+      const text = outputElement.textContent;
+      if (!text) return;
       try {
-        document.execCommand('copy');
-        alert('Prompt berhasil disalin!');
+        await navigator.clipboard.writeText(text);
+        showToast();
       } catch (err) {
-        alert('Gagal menyalin prompt.');
+        console.error('Clipboard write failed:', err);
       }
-      selection.removeAllRanges();
     });
+
+    function showToast() {
+      const toast = document.getElementById('toast');
+      toast.className = "show";
+      setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 2500);
+    }
   </script>
 </body>
 </html>
